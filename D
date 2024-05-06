@@ -1,0 +1,118 @@
+-- nama lengkap: Mohammad Andika Ravitama S
+-- NPM: 10122776
+-- kelas: 2KA20
+
+-- 1. Jelaskan mengenai klausa with check option dan klausa read only!
+-- Jawaban:
+-- Klausa WITH CHECK OPTION dan klausa READ ONLY adalah dua fitur penting dalam SQL yang 
+-- digunakan untuk mengontrol dan mengatur perilaku dari view dalam basis data.
+
+-- Klausa WITH CHECK OPTION memastikan bahwa semua baris yang dimasukkan atau diperbarui melalui 
+-- view akan mematuhi kriteria atau kondisi yang didefinisikan dalam klausa WHERE saat view 
+-- dibuat. Dengan kata lain, klausa WITH CHECK OPTION memastikan bahwa setiap perubahan yang 
+-- dilakukan pada view akan mematuhi kriteria yang telah ditentukan, sehingga tidak akan 
+-- menghasilkan baris yang melanggar kriteria tersebut. Ini membantu memastikan konsistensi 
+-- data dan membatasi kemungkinan kesalahan saat melakukan perubahan melalui view.
+
+-- Di sisi lain, klausa READ ONLY digunakan untuk membuat view menjadi hanya bisa dibaca 
+-- (read-only). Artinya, view tersebut tidak dapat digunakan untuk melakukan operasi penyisipan
+-- (INSERT), pembaruan (UPDATE), atau penghapusan (DELETE) terhadap data. Klausa ini berguna 
+-- ketika kita ingin memastikan bahwa view hanya digunakan untuk tujuan pembacaan data dan
+-- tidak mengizinkan perubahan pada data melalui view tersebut. Ini membantu melindungi
+-- integritas data dan mencegah modifikasi yang tidak diinginkan pada data yang mungkin dibaca 
+-- oleh pengguna.
+
+-- 2. Terdapat tabel mahasiswa_kampus seperti di bawah ini:
+-- | npm      | nama_lengkap | tempat_tinggal |
+-- | 1234567  | Guntur Adi   | Bandung        |
+-- | 1234568  | Yono Oracle  | Jakarta        |
+-- | 1234569  | Ghina Putri  | Jogja          |
+-- | 1234560  | Cahya Purna  | Pontianak      |
+-- | 1234562  | Rani Horse   | Bandung        |
+-- | 1234563  | Dian Wings   | Jakarta        |
+-- | 1234561  | Roni Groof   | Pontianak      |
+-- Buat view untuk masing-masing tempat tinggal, yaitu "view_bandung", "view_jakarta", "view_jogja", dan "view_pontianak".
+-- View tersebut akan menampilkan kolom NPM, nama lengkap, dan tempat tinggal. 
+-- Tampilkan setiap view agar siap digunakan oleh pihak kampus untuk melihat data mahasiswa dengan lebih mudah.
+-- Jawaban:
+
+CREATE DATABASE ravitama_10122776;
+USE ravitama_10122776;
+
+
+CREATE TABLE ravitama_mhsgundar (
+    npm VARCHAR(10) PRIMARY KEY,
+    nama_lengkap VARCHAR(50),
+    tempat_tinggal VARCHAR(50)
+);
+
+INSERT INTO ravitama_mhsgundar (npm, nama_lengkap, tempat_tinggal) VALUES
+('1234567', 'Guntur Adi', 'Bandung'),
+('1234568', 'Yono Oracle', 'Jakarta'),
+('1234569', 'Ghina Putri', 'Jogja'),
+('1234560', 'Cahya Purna', 'Pontianak'),
+('1234562', 'Rani Horse', 'Bandung'),
+('1234563', 'Dian Wings', 'Jakarta'),
+('1234561', 'Roni Groof', 'Pontianak');
+
+-- Membuat view untuk mahasiswa yang tinggal di Bandung
+CREATE VIEW view_bandung AS
+SELECT npm, nama_lengkap, tempat_tinggal
+FROM ravitama_mhsgundar
+WHERE tempat_tinggal = 'Bandung';
+
+-- Membuat view untuk mahasiswa yang tinggal di Jakarta
+CREATE VIEW view_jakarta AS
+SELECT npm, nama_lengkap, tempat_tinggal
+FROM ravitama_mhsgundar
+WHERE tempat_tinggal = 'Jakarta';
+
+-- Membuat view untuk mahasiswa yang tinggal di Bandung
+CREATE VIEW view_bandung AS
+SELECT npm, nama_lengkap, tempat_tinggal
+FROM ravitama_mhsgundar
+WHERE tempat_tinggal = 'Bandung';
+
+
+-- 3. Ahmad baru-baru ini ditugaskan untuk mengelola data mahasiswa, seperti melakukan pencarian, pembaruan, penambahan, dan penghapusan pada data tabel mahasiswa_kampus.
+-- Namun, sebelum Ahmad dapat mulai bekerja, administrator sistem basis data perlu memberikan izin akses ke tabel mahasiswa_kampus kepada Ahmad.
+-- Administrator memutuskan untuk membuat user baru yang bernama ahmad dengan password ahmad123, user tersebut akan diberikan role dengan nama "pengelola" yang
+-- berisi akses CONNECT ke database, kemudian akses untuk melakukan SELECT, INSERT, UPDATE, dan DELETE khusus hanya untuk tabel mahasiswa_kampus. 
+-- Bantu administrator untuk menyelesaikan pekerjaannya!
+-- Jawaban:
+
+-- Membuat database mahasiswa_kampus
+CREATE DATABASE ravitama_10122776_gunadarma;
+USE ravitama_10122776_gunadarma
+
+-- Membuat tabel mahasiswa_kampus
+CREATE TABLE ravitamaMahasiswa2KA20 (
+    npm VARCHAR(10) PRIMARY KEY,
+    nama_lengkap VARCHAR(50),
+    tempat_tinggal VARCHAR(50)
+);
+
+-- Memasukkan data ke dalam tabel mahasiswa_kampus (opsional)
+INSERT INTO ravitamaMahasiswa2KA20 (npm, nama_lengkap, tempat_tinggal) VALUES
+('111111', 'Mohammad', 'Bandung'),
+('222222', 'Andika', 'Jakarta'),
+('333333', 'Ravitama', 'Jogja'),
+('444444', 'Supriadi', 'Pontianak'),
+('555555', 'Sheila', 'Bandung'),
+('666666', 'Zhalikha', 'Jakarta'),
+('777777', 'Widianto', 'Pontianak');
+
+-- Membuat pengguna baru "ahmad" dengan password "ahmad123"
+CREATE USER ahmad IDENTIFIED BY ahmad123;
+
+-- Membuat role "pengelola"
+CREATE ROLE ahmadpengelola;
+
+-- Memberikan izin akses CONNECT ke database kepada role "pengelola"
+GRANT CONNECT TO ahmadpengelola;
+
+-- Memberikan izin SELECT, INSERT, UPDATE, dan DELETE khusus hanya untuk tabel "mahasiswa_kampus" kepada role "pengelola"
+GRANT SELECT, INSERT, UPDATE, DELETE ON ravitamaMahasiswa2KA20 TO ahmadpengelola;
+
+-- Memberikan role "pengelola" kepada pengguna "ahmad"
+GRANT ahmadpengelola TO ahmad;
