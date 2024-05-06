@@ -1,0 +1,163 @@
+/*
+nama lengkap: Mohammad Andika Ravitama S
+NPM: 10122776
+kelas: 2KA20
+
+-- Nomor 1
+DCL, atau Data Control Language, adalah bagian dari bahasa SQL yang digunakan untuk mengontrol
+hak akses dan izin pengguna terhadap objek-objek dalam basis data. Perintah-perintah DCL yang 
+umum digunakan meliputi:
+
+GRANT: Perintah GRANT digunakan untuk memberikan hak akses tertentu kepada pengguna terhadap objek-objek dalam basis data,
+seperti tabel, view, atau prosedur tersimpan. Hak akses yang dapat diberikan meliputi SELECT,
+INSERT, UPDATE, DELETE, dan sebagainya.
+
+REVOKE: Perintah REVOKE digunakan untuk mencabut hak akses yang sebelumnya telah diberikan 
+kepada pengguna terhadap objek-objek dalam basis data. 
+Dengan menggunakan perintah ini, administrator dapat membatasi atau mencabut hak akses 
+pengguna jika diperlukan. Perintah-perintah ini penting dalam mengatur keamanan dan 
+pengelolaan basis data, karena memungkinkan administrator untuk mengendalikan siapa yang 
+memiliki akses dan apa yang dapat dilakukan oleh pengguna terhadap data dalam sistem.
+
+-- Nomor 2
+Buat dua tabel berikut ini dalam database Oracle!
+
+Tabel Employees dengan kolom-kolom berikut:
+--------------------------------------------------------------------------------
+| employee_id (PK) | full_name      | job_title           | department_id (FK) |
+--------------------------------------------------------------------------------
+| 0123             | afrizal fathan | back end programmer | IT123              |
+| 0345             | diva rizky     | network engineer    | IA345              |
+| 0567             | damar ardian   | project manager     | IT123              |
+--------------------------------------------------------------------------------
+
+Tabel Departments dengan kolom-kolom berikut:
+------------------------------------------------------
+| department_id (PK) | department_name    | location |
+------------------------------------------------------
+| IT123              | IT Department      | Tower C  |
+| DG789              | Design Department  | Tower B  |
+| IA345              | Network Department | Tower E  |
+------------------------------------------------------
+
+Buatlah sebuah view yang menampilkan informasi berikut:
+Nama lengkap karyawan
+Jabatan karyawan
+Nama departemen
+Lokasi departemen
+
+Jawaban:
+
+1 (membuat Database)
+CREATE DATABASE ravitama_10122776;
+USE ravitama_10122776;
+
+2 (membuat table employee)
+CREATE TABLE employeeRavitama (
+    employee_id VARCHAR2(10) PRIMARY KEY,
+    full_name VARCHAR2(50),
+    job_title VARCHAR2(50),
+    department_id VARCHAR2(10) REFERENCES Departments(department_id)
+    
+3 (memasukan data employee)
+INSERT INTO employeeRavitama (employee_id, full_name, job_title, department_id) VALUES
+('0123', 'afrizal fathan', 'back end programmer', 'IT123'),
+('0345', 'diva rizky', 'network engineer', 'IA345'),
+('0567', 'damar ardian', 'project manager', 'IT123');
+
+Step 3 (membuat table departemen)
+CREATE TABLE ravitamadepartemen (
+    department_id VARCHAR2(10) PRIMARY KEY,
+    department_name VARCHAR2(50),
+    location VARCHAR2(50)
+);
+
+Step 4 (memasukan data ke table departemen)
+INSERT INTO ravitamadepartemen (department_id, department_name, location) VALUES
+('IT123', 'IT Department', 'Tower C'),
+('DG789', 'Design Department', 'Tower B'),
+('IA345', 'Network Department', 'Tower E');
+
+Step 5 (membuat view table employee dan departemen)
+CREATE VIEW employeeRavitama_ravitamadepartemen_Info AS
+SELECT e.full_name AS employee_name,
+       e.job_title,
+       d.department_name,
+       d.location
+FROM employeeRavitama e
+JOIN ravitamadepartemen d ON e.department_id = d.department_id;
+
+-- Nomor 3
+Sebuah perpustakaan di Universitas memiliki sistem peminjaman buku. Setiap kali seorang mahasiswa 
+meminjam buku, jumlah buku yang tersedia harus dikurangi. Pada hari Rabu, tiga mahasiswa meminjam 
+2 buku Struktur Data dan 1 buku Pemrograman Berbasis Web, setelah itu lakukan penyimpanan sementara
+(savepoint). Keesokan harinya salah satu mahasiswa mengembalikkan 1 buku Struktur Data dan 
+meminjam 1 buku Sistem Jaringan. 
+Implementasikan transaksi Oracle untuk mencatat peminjaman buku oleh mahasiswa tersebut dan tampilkan setiap pembaruan 
+transaksi dari jumlah buku yang tersedia di dalam tabel "Buku" serta simpan data tersebut secara
+permanen.
+
+Ketentuan struktur tabel seperti dibawah ini:
+nama database = nama_npm
+
+Struktur Tabel
+nama table = buku_nama_npm
+
+RECORD TABLE
+-------------------------------------------------------------
+| Id_buku  | 	judul_buku		  | jumlah_tersedia |
+-------------------------------------------------------------
+|    001   | Pemrograman Berbasis Web	  |  	  50        |
+|    002   | Struktur Data		  |  	  50        |
+|    003   | Sistem Jaringan		  |  	  50        |
+-------------------------------------------------------------
+
+Jawaban:
+
+1. (membuat database)
+CREATE DATABASE ravitama_10122776;
+USE ravitama_10122776;
+
+
+2 (membuat table buku nama npm)
+CREATE TABLE buku_ravitama_10122776 (
+    Id_buku VARCHAR2(10) PRIMARY KEY,
+    judul_buku VARCHAR2(100),
+    jumlah_tersedia NUMBER
+
+3 (menginput buku ke table buku)
+INSERT INTO buku_ravitama_10122776 (Id_buku, judul_buku, jumlah_tersedia) VALUES
+('001', 'Pemrograman Berbasis Web', 50),
+('002', 'Struktur Data', 50),
+('003', 'Sistem Jaringan', 50);
+
+4  (memulai transaksi)
+BEGIN
+
+5 (mengurangi jumlah buku setelah dipinjam 3 mahasiswa)
+ UPDATE buku_ravitama_10122776
+    SET jumlah_tersedia = jumlah_tersedia - 3
+    WHERE judul_buku IN ('Struktur Data', 'Pemrograman Berbasis Web');
+    
+6 (savepoint sementara)
+SAVEPOINT after_borrow;
+
+7 (mengupdate jumlah buku setelah buku yang dipinjam dikembalikan)
+	UPDATE buku_ravitama_10122776
+    SET jumlah_tersedia = jumlah_tersedia + 1
+    WHERE judul_buku = 'Struktur Data';
+    
+    UPDATE buku_ravitama_10122776
+    SET jumlah_tersedia = jumlah_tersedia - 1
+    WHERE judul_buku = 'Sistem Jaringan';
+    
+Step 7 (menyimpan secara permanen)
+ COMMIT;
+EXCEPTION
+
+Step 8 (Rollback ke titik savepoint sementara)
+WHEN OTHERS THEN
+        ROLLBACK TO after_borrow;
+END;
+
+*/
