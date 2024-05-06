@@ -1,0 +1,167 @@
+/*
+NAMA: Mohammad Andika Ravitama Supriadi
+NPM: 101222776
+KELAS: 2KA20
+1. Jelaskan apa perbedaan complex view dan simple view
+Jawaban:
+
+Complex View
+
+Complex View menampilkan banyak informasi sekaligus. Hal ini dapat bermanfaat untuk memahami 
+hubungan yang kompleks antara data yang berbeda. Namun, Complex View juga bisa sulit dipahami, 
+terutama bagi orang yang tidak terbiasa dengan jenis visualisasi ini.
+
+Simple View
+
+Simple View hanya menampilkan sedikit informasi. Hal ini dapat membantu membuat data lebih 
+mudah dipahami, terutama bagi orang yang tidak terbiasa dengan visualisasi data. Namun, Simple 
+View mungkin tidak memberikan informasi yang cukup untuk memahami hubungan yang kompleks antara
+data.
+
+2. Buatlah dua tabel berikut dalam oracle! 
+
+Table Buku
+ ---------------------------------------------------------------------------
+|Book_ID (PK) | Judul                | Penulis       | Genre     |  Harga   |
+|------------ |----------------------|---------------|-----------|----------|
+| 101         | The Great Gatsby     | F. Scott      | Fiction   | 100.000  |
+| 201         | Harry Potter         | J.K. Rowling  | Fantasy   | 200.000  |
+| 103         | To Kill a Mockingbird| Harper Lee    | Fiction   | 180.000  |
+| 404         | 1984                 | George Orwell | Dystopian | 120.000  |
+----------------------------------------------------------------------------
+
+Table Inventory
+ -----------------------------------
+|Invent_ID (PK)|Book_ID (FK)| Stok  | 
+|--------------|------------|-------|
+| 113          | 103        | 10    |
+| 111          | 101        | 15    |
+| 211          | 201        | 8     |
+| 414          | 404        | 9     |
+------------------------------------
+
+- Jadikan kolom Book_ID dan Invent_ID sebagai PRIMARY KEY (PK) dan 
+kolom Book_ID pada table Inventory menjadi FOREIGN KEY (FK)
+- Buatlah sebuah view dengan nama v_inventory_npm yang menampilkan 
+judul buku, penulis, genre, harga, dan stok. 
+
+Jawaban:
+
+-- Membuat Database
+CREATE DATABASE Ravitama_10122776;
+USE Ravitama_10122776;
+
+-- Membuat tabel Buku
+CREATE TABLE Ravitamasupriadibuku (
+    Book_ID INT PRIMARY KEY,
+    Judul VARCHAR(100),
+    Penulis VARCHAR(100),
+    Genre VARCHAR(50),
+    Harga DECIMAL(10, 2)
+);
+
+-- Membuat tabel Inventory
+CREATE TABLE Raviitama (
+    Invent_ID INT PRIMARY KEY,
+    Book_ID INT,
+    Stok INT,
+    FOREIGN KEY (Book_ID) REFERENCES Buku(Book_ID)
+);
+
+-- Menambahkan data ke dalam tabel Buku
+INSERT INTO Ravitamasupriadibuku (Book_ID, Judul, Penulis, Genre, Harga)
+VALUES
+    (101, 'The Great Gatsby', 'F. Scott', 'Fiction', 100000),
+    (201, 'Harry Potter', 'J.K. Rowling', 'Fantasy', 200000),
+    (103, 'To Kill a Mockingbird', 'Harper Lee', 'Fiction', 180000),
+    (404, '1984', 'George Orwell', 'Dystopian', 120000);
+
+-- Menambahkan data ke dalam tabel Inventory
+INSERT INTO Raviitama (Invent_ID, Book_ID, Stok)
+VALUES
+    (113, 103, 10),
+    (111, 101, 15),
+    (211, 201, 8),
+    (414, 404, 9);
+
+-- Membuat view v_inventory_npm
+CREATE VIEW v_Raviitama_101222776 AS
+SELECT b.Judul, b.Penulis, b.Genre, b.Harga, i.Stok
+FROM Buku b
+JOIN Raviitama i ON b.Book_ID = i.Book_ID;
+
+
+
+3. Labsi membuka pendaftaran asisten baru dengan kapasistas 12 orang, 
+setiap mahasiswa yang ingin mendaftar wajib memasukkan data berupa id NAMA, NPM, Semester, dan IPK. 
+mahasiswa yang mendaftar adalah 12 orang, setelah data sudah dimasukkan semua ada 3 orang mengundurkan diri yaitu zahra, saskya, putri. 
+Dari 9 mahasiswa ini akan diseleksi lagi dengan kriteria IPK harus lebih dari 3.5 dan semester harus diatas 2, buatkan database untuk mengatur pendaftaran pada labsi
+
+berikut data mahasiswa yang mendaftar
+ ---------------------------------------------------------------------------------------------------------------
+|ID             | Nama			| NPM			| Semester		| IPK			|
+|---------------------------------------------------------------------------------------------------------------|
+|1              |bayu			| 10121301		| 4			| 3.2			|
+|2              |putra			| 10121302		| 2			| 3.7			|
+|3              |rihana			| 10121303		| 3			| 3.8			|
+|4              |gilang			| 10121304		| 1			| 3.1			|
+|5              |maulana		| 10121305		| 2			| 3.2			|
+|6              |richard		| 10121306		| 5			| 3.5			|
+|7              |alfira			| 10121307		| 6			| 3.0			|
+|8              |hakim			| 10121308		| 3			| 3.4			|
+|9              |rozan			| 10121309		| 4			| 3.3			|
+|10             |putri			| 10121310		| 4			| 3.9			|
+|11             |saskya			| 10121311		| 2			| 3.8			|
+|12             |zahra			| 10121312		| 5			| 3.1			|
+ ---------------------------------------------------------------------------------------------------------------
+
+ketentuan:
+buat user dengan nama (Nama_NPM),
+buat table dengan nama (Ujian_nama),
+masukkan 12 data mahasiswa diatas,
+gunakan savepoin dengan nama save1 untuk kembali ke data no 9 sebelum kalian masukkan data putri, saskya, zahra,
+munculkan data untuk melihat mahasiswa dengan IPK diatas 3.5 dan semester diatas 2
+
+Jawaban:
+
+1 (Buat database labsi)
+CREATE DATABASE Ravitamalabsi;
+USE Ravitamalabsi;
+
+Step 2 (Buat user nama NPM)
+CREATE USER 'RavitamaSupriadi_10122776' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON labsi.* TO 'RavitamaSupriadi_10122776';
+
+Step 3 (Membuat table dengan UJIAN_nama)
+
+CREATE TABLE Ujian_Ravitama (
+    ID INT PRIMARY KEY,
+    Nama VARCHAR(50),
+    NPM VARCHAR(10),
+    Semester INT,
+    IPK DECIMAL(3, 1)
+);
+
+Step 4 (Memasukan data data yang diminta ke table Ujian_Ravitama)
+INSERT INTO Ujian_Ravitama (ID, Nama, NPM, Semester, IPK) VALUES
+    (1, 'bayu', '10121301', 4, 3.2),
+    (2, 'putra', '10121302', 2, 3.7),
+    (3, 'rihana', '10121303', 3, 3.8),
+    (4, 'gilang', '10121304', 1, 3.1),
+    (5, 'maulana', '10121305', 2, 3.2),
+    (6, 'richard', '10121306', 5, 3.5),
+    (7, 'alfira', '10121307', 6, 3.0),
+    (8, 'hakim', '10121308', 3, 3.4),
+    (9, 'rozan', '10121309', 4, 3.3),
+    (10, 'putri', '10121310', 4, 3.9),
+    (11, 'saskya', '10121311', 2, 3.8),
+    (12, 'zahra', '10121312', 5, 3.1);
+
+Step 5 (Buat savepoint untuk kembali ke titik sebelum memasukkan data mahasiswa putri, saskya, dan zahra)
+
+SAVEPOINT save1;
+
+Step 6 (Mencari data mahasiswa dengan IPK 3,5 dan semester diatas 2)
+
+SELECT * FROM Ujian_Ravitama WHERE IPK > 3.5 AND Semester > 2;
+*/
