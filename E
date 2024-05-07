@@ -1,102 +1,16 @@
--- 1. Jelaskan apa itu perintah COMMIT dan ROLLBACK!
-Jawaban:
 
-COMMIT
-COMMIT adalah perintah dalam sistem basis data yang digunakan untuk mengonfirmasi dan 
-menyimpan perubahan yang dilakukan dalam transaksi ke dalam database secara permanen. Ketika 
-perintah COMMIT dieksekusi, semua perubahan yang dilakukan dalam transaksi tersebut akan 
-menjadi bagian dari database dan tidak dapat dibatalkan.
-
-Sementara itu, perintah ROLLBACK digunakan untuk membatalkan transaksi yang belum selesai 
-atau mengembalikan database ke keadaan sebelum transaksi dimulai. Ini sangat berguna jika 
-terjadi kesalahan atau jika transaksi tidak dapat diselesaikan dengan sukses. 
-Dengan menjalankan perintah ROLLBACK, perubahan yang dibuat dalam transaksi dibatalkan dan 
-database dikembalikan ke keadaan sebelum transaksi dimulai, sehingga memungkinkan 
-untuk menghindari efek samping yang tidak diinginkan.
-
--- 2. Buatlah tabel Barang seperti dibawah ini
--- | ID	 | Barang	 | Tujuan 	|
--- | 201 | Paku		 | Bandung  |
--- | 203 | Kayu		 | Jakarta  |
--- | 206 | Pasir	 | Bogor	|
--- Kemudian buat view dengan nama view V_BARANG_NPM yang menampilkan
--- ID dan Tujuan dari table Barang! 
--- dan berikan perintah untuk menampilkan view yang telah kamu buat!
-Jawaban:
-
-1 (membuat database)
-CREATE DATABASE ravitama_10122776;
-USE ravitama_10122776;
-
-2 (membuat table barang)
-CREATE TABLE ravitamabarang (
-    ID INT,
-    Barang VARCHAR(50),
-    Tujuan VARCHAR(50)
-);
-
-3 (memasukan data barang ke table barang)
-INSERT INTO ravitamabarang (ID, Barang, Tujuan) VALUES
-(201, 'Paku', 'Bandung'),
-(203, 'Kayu', 'Jakarta'),
-(206, 'Pasir', 'Bogor');
-
-4 (membuat view table barang)
-CREATE VIEW V_BARANG_10122776 AS
-SELECT ID, Tujuan
-FROM ravitamabarang;
-
-Step 4 (perintah menampikan table barang)
-SELECT * FROM V_BARANG_10122776;
-
-
-
-
- 
--- 3. Seorang pengelola jadwal ke berangkatan bis sedang berjaga pada pagi hari, ia mendata penumpang yang akan pergi ke tujuannya
--- masing-masing. Data akan langsung dicatat sebagai table berangkat berikut:
--- | ID	 | Nama 	 | Tujuan 	|
--- | 111 | Loid 	 | Bandung  |
--- | 134 | Yor		 | Jakarta  |
--- | 176 | Anya		 | Jonggol  | 
--- Data diatas adalah orang sudah memesan meskipun belum membayar, dalam 1 x 24 jam maka data akan dihapus apa bila 
--- belum membayar. Data akan dipermanenkan jika orang tersebut sudah membayar, para penumpang yang sudah membayar 
--- maka uangnya sudah tidah bisa dikembalikan. Pada waktu yang hampir bersamaan ketiga penumpang tersebut melunasi pembayaran.
--- Sehingga data dapat dipermanenkan. Kemudian pada siang hari seorang penumpang bernama Fiona ingin pergi dengan tujuan ke Bandung.
--- Data penumpang pun berubah menjadi seperti ini:
--- | ID	 | Nama 	 | Tujuan 	|
--- | 111 | Loid 	 | Bandung  |
--- | 134 | Yor		 | Jakarta  |
--- | 176 | Anya		 | Jonggol  |
--- | 181 | Fiona	 | Bandung  |
--- Akan tetapi setelah 1 x 24 jam penumpang atas nama Fiona tidak melunasi pembayarannya. Sehingga data tersebut dikembalikan seperti
--- sebelumnnya menjadi seperti ini:
-
-Jawaban:
-
-
-1. (membuat database)
-CREATE DATABASE ravitama_10122776;
-USE ravitama_10122776
-
-2. (membuat table keberangkatan)
-CREATE TABLE ravitamakeberangkatan (
-    ID INT,
-    Nama VARCHAR(50),
-    Tujuan VARCHAR(50)
-);
-
-3 (mengisi table dengan data keberangkatan)
-INSERT INTO ravitamakeberangkatan (ID, Nama, Tujuan) VALUES
-(111, 'Loid', 'Bandung'),
-(134, 'Yor', 'Jakarta'),
-(176, 'Anya', 'Jonggol');
-
-Step 3 (menghapus data pemesan namun belum bayar)
-DELETE FROM ravitamakeberangkatan WHERE ID = 181;
-
-Step 4 (apabila fiona sudah membayar)
-INSERT INTO ravitamakeberangkatan (ID, Nama, Tujuan) VALUES (181, 'Fiona', 'Bandung');
-
-Step 5 (mengembalikan data ke sebelumnya karena fiona tidak membayar)
-DELETE FROM ravitamakeberangkatan WHERE ID = 181;
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dicoding Indonesia Website</title>
+  </head>
+  <body>
+    <main>
+      <h1>Dicoding Indonesia</h1>
+      <h2>Gudangnya developer handal</h2>
+      <p>Mencetak banyak lulusan terbaik khususnya para developer.</p>
+      <img src="logo_dicoding.png" alt="Image dicoding" />
+      <p>Paragraph two with a <a href="https://dicoding.com">klik disini</a></p>
+    </main>
+  </body>
+</html>
