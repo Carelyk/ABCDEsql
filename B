@@ -1,8 +1,3 @@
-*
-nama lengkap: Mohammad Andika Ravitama Supriadi
-NPM: 10122776
-kelas: 2KA20
-
 SOAL 1
 Jelaskan apa yang dimaksud dengan grant and revoke? dan perintah apa saja yang
 dapat kita gunakan pada gran and revoke? berikan contohnya
