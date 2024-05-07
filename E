@@ -1,7 +1,3 @@
-nama lengkap: Mohammad Andika Ravitama S
-NPM: 10122776
-kelas: 2KA20
-
 -- 1. Jelaskan apa itu perintah COMMIT dan ROLLBACK!
 Jawaban:
 
