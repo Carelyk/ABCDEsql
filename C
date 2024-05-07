@@ -1,8 +1,3 @@
-/*
-nama lengkap: Mohammad Andika Ravitama S
-NPM: 10122776
-kelas: 2KA20
-
 -- Nomor 1
 DCL, atau Data Control Language, adalah bagian dari bahasa SQL yang digunakan untuk mengontrol
 hak akses dan izin pengguna terhadap objek-objek dalam basis data. Perintah-perintah DCL yang 
