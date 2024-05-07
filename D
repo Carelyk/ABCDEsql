@@ -1,7 +1,3 @@
--- nama lengkap: Mohammad Andika Ravitama S
--- NPM: 10122776
--- kelas: 2KA20
-
 -- 1. Jelaskan mengenai klausa with check option dan klausa read only!
 -- Jawaban:
 -- Klausa WITH CHECK OPTION dan klausa READ ONLY adalah dua fitur penting dalam SQL yang 
